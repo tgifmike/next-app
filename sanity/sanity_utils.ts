@@ -1,34 +1,34 @@
-import { Project } from "@/types/Project";
+import { Blog } from "@/types/Blog";
 import { createClient, groq } from "next-sanity";
 import clientConfig from "./config/client-config";
 import { Page } from "@/types/Page";
 
-export async function getProjects(): Promise<Project[]> {
+export async function getBlogs(): Promise<Blog[]> {
   return createClient(clientConfig).fetch(
-    groq`*[ _type == "project"]{
+    groq`*[ _type == "blog"]{
 
     _id,
     createdAt,
     name,
     "slug": slug.current,
     "image": image.asset->url,
-    url,
+    preview,
     content
 
   }`
   );
 }
 
-export async function getProject(slug: string): Promise<Project> {
+export async function getBlog(slug: string): Promise<Blog> {
   return createClient(clientConfig).fetch(
-    groq`*[ _type == "project" && slug.current == $slug][0]{
+    groq`*[ _type == "blog" && slug.current == $slug][0]{
 
     _id,
     createdAt,
     name,
     "slug": slug.current,
     "image": image.asset->url,
-    url,
+    preview,
     content
 
   }`,

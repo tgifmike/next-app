@@ -1,6 +1,5 @@
 import { defineConfig } from "sanity";
 import { deskTool } from "sanity/desk";
-// import project from "./sanity/schemas/project-schema";
 import schema from "./sanity/schemas";
 import schemas from "./sanity/schemas";
 

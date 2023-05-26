@@ -1,6 +1,6 @@
-const project = {
-  name: "project",
-  title: "Projects",
+const blog = {
+  name: "blog",
+  title: "Blogs",
   type: "document",
   fields: [
     {
@@ -28,9 +28,10 @@ const project = {
       ],
     },
     {
-      name: "url",
-      title: "URL",
-      type: "url",
+      name: "preview",
+      title: "Preview",
+      type: "array",
+      of: [{ type: "block" }],
     },
     {
       name: "content",
@@ -41,4 +42,4 @@ const project = {
   ],
 };
 
-export default project;
+export default blog;
