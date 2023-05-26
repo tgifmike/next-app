@@ -3,6 +3,11 @@ import "../globals.css";
 import { Inter } from "next/font/google";
 import { getPages } from "@/sanity/sanity_utils";
 import Image from "next/image";
+import { Providers } from "./providers";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
+import { LoginButton } from "./auth";
+import { User } from "./user";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,60 +23,67 @@ export default async function RootLayout({
 }) {
   //get all of our pages
   const pages = await getPages();
+  const session = await getServerSession(authOptions);
 
   return (
     <html lang="en">
-      <body className="max-w-5xl mx-auto py-1">
-        <header className="flex items-center justify-between">
-          <Link href=" / ">
-            <Image
-              src="/TML_logo.png"
-              width={250}
-              height={200}
-              alt="The Manager Life Logo"
-              className="object-cover"
-            />
-          </Link>
+      <Providers>
+        <body className="max-w-5xl mx-auto py-1">
+          <header className="flex items-center justify-between">
+            <Link href=" / ">
+              <Image
+                src="/TML_logo.png"
+                width={250}
+                height={200}
+                alt="The Manager Life Logo"
+                className="object-cover"
+              />
+            </Link>
 
-          <div className="flex items-center gap-5 text-lg text-gray-600">
-            {pages.map((page) => (
-              <Link
-                key={page._id}
-                href={`/${page.slug}`}
-                className="hover:underline"
-              >
-                {page.title}
+            <div className="flex items-center gap-5 text-lg text-gray-600">
+              {pages.map((page) => (
+                <Link
+                  key={page._id}
+                  href={`/${page.slug}`}
+                  className="hover:underline"
+                >
+                  {page.title}
+                </Link>
+              ))}
+              <Link href="/allposts">All Blog Post</Link>
+              <LoginButton />
+              {/* <LogoutButton /> */}
+            </div>
+          </header>
+
+          <main className="py-1">
+            <div>{children}</div>
+          </main>
+
+          <footer className=" bg-slate-500 h-40 dark:bg-gray-900">
+            <div className="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4 text-md text-white">
+              <Link className="hover:underline" href="/">
+                HOME
               </Link>
-            ))}
-            <Link href="/allBlogs">All Blog Post</Link>
-          </div>
-        </header>
-
-        <main className="py-1">{children}</main>
-
-        <footer className=" bg-sky-500/100 h-40 dark::bh-gray-900">
-          <div className="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4 text-md text-white">
-            <Link className="hover:underline" href="/">
-              HOME
-            </Link>
-            {pages.map((page) => (
-              <Link
-                key={page._id}
-                href={`/${page.slug}`}
-                className="hover:underline"
-              >
-                {page.title}
+              {pages.map((page) => (
+                <Link
+                  key={page._id}
+                  href={`/${page.slug}`}
+                  className="hover:underline"
+                >
+                  {page.title}
+                </Link>
+              ))}
+              <Link className="hover:underline" href="/allposts">
+                All Blog Post
               </Link>
-            ))}
-            <Link className="hover:underline" href="/allBlogs">
-              All Blog Post
-            </Link>
-            <Link className="hover:underline" href="/">
-              Site Map
-            </Link>
-          </div>
-        </footer>
-      </body>
+              <Link className="hover:underline" href="/">
+                Site Map
+              </Link>
+            </div>
+          </footer>
+        </body>
+      </Providers>
     </html>
   );
 }

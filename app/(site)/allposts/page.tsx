@@ -3,17 +3,12 @@ import { PortableText } from "@portabletext/react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default async function Home() {
+export default async function allPosts() {
   const blogs = await getBlogs();
 
   return (
     <div>
-      <h1 className="text-5xl font-extrabold text-grey-800">
-        Welcome to <span className="text-red-600">The Manager Life!</span>
-      </h1>
-
-      <p className="mt-3 text-xl text-grey-600">Check out these Blogs!</p>
-
+      <h1 className="text-5xl font-extrabold text-grey-800">All Blog Posts</h1>
       <div className="mt-5 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {blogs.map((blog) => (
           <Link

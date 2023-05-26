@@ -10,6 +10,9 @@ const nextConfig = {
         port: "",
       },
     ],
+    experimental: {
+      serverComponentsExternalPackages: ["@prisma/client", "bcrypt"],
+    },
   },
 };
 
