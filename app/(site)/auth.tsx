@@ -10,7 +10,7 @@ export const LoginButton = () => {
     <div className="ml-auto flex gap-2">
       {session?.user ? (
         <>
-          <p className="text-sky-600">Welcome, {session.user.email}</p>
+          <p className="text-sky-600">Welcome, {session.user.userName}</p>
           <button className="text-red-500" onClick={() => signOut()}>
             Sign Out
           </button>
